@@ -20,7 +20,9 @@
                     <h5>{{ venta.fecha_de_venta }}</h5>                         
                 </div>
                 {% empty %}
-                    <li>No hay ventas disponibles.</li>
+                    <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
+                        <p style="margin-top: 4px; margin-bottom: 8px;">No hay ventas</p>
+                    </div>
                 {% endfor %}
         </div>
     </div>
