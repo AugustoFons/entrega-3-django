@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section id="card" class="card">
+    <div class="container">
+        <ul class="navbar" style="list-style: none; display: flex; justify-content: center;">
+            <li >
+                <a class="getstarted scrollto mt-3" href="/ventas/crear/">Nueva Venta <span style="font-size: large; font-weight: bolder; margin-left: 4px;"> +</span></a>
+            </li>
+        </ul>
+        <div class="row no-gutters">
+                {% for venta in ventas %}
+                <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="margin-left: auto; font-size: medium;">{{ venta.nro_venta }}<sup>n°venta</sup></span>
+                    <span style="margin: 0 auto;">{{ venta.cantidad }} {{ venta.producto }}</span>
+                    <p style="margin-top: 4px; margin-bottom: 8px;">{{ venta.cliente }}</p>
+                    <h5>{{ venta.fecha_de_venta }}</h5>                         
+                </div>
+                {% empty %}
+                    <li>No hay ventas disponibles.</li>
+                {% endfor %}
+        </div>
+    </div>
+</section
+
+{% endblock %}

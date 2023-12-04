@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contenido %}
+
+<section id="card" class="card">
+    <div class="container">
+
+        <div class="row no-gutters">
+                {% for producto in productos %}
+                <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="margin-left: auto; font-size: medium;">{{ producto.id }}<sup>id</sup></span>
+                    <span style="margin: 0 auto;">{{ producto.nombre }}</span>
+                    <p style="margin-top: 4px; margin-bottom: 8px;">{{ producto.descripcion }}</p>
+                    <h5>Stock: {{ producto.stock }}</h5>                         
+                </div>
+                {% empty %}
+                    <li>No hay productos disponibles.</li>
+                {% endfor %}
+        </div>
+    </div>
+</section
+
+{% endblock %}
