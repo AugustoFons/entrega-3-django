@@ -2,23 +2,62 @@
 {% load static %}
 
 {% block contenido %}
+<form action="/busqueda/" method="post">
+    {% csrf_token %}
+    <p>Nombre del Producto <input type="text" name="nombre"></p>
+    <input type="submit" value="Enviar">
+</form>
 
 <section id="card" class="card">
     <div class="container">
-
         <div class="row no-gutters">
-                {% for producto in productos %}
-                <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
-                    <span style="margin-left: auto; font-size: medium;">{{ producto.id }}<sup>id</sup></span>
-                    <span style="margin: 0 auto;">{{ producto.nombre }}</span>
-                    <p style="margin-top: 4px; margin-bottom: 8px;">{{ producto.descripcion }}</p>
-                    <h5>Stock: {{ producto.stock }}</h5>                         
-                </div>
-                {% empty %}
+                <!-- lista general -->
+                {% if not '/busqueda' in request.path %}
+                    {% for producto in productos %}
+                    <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
+                        <span style="margin-left: auto; font-size: medium;">{{ producto.id }}<sup>id</sup></span>
+                        <span style="margin: 0 auto;">{{ producto.nombre }}</span>
+                        <p style="margin-top: 4px; margin-bottom: 8px;">{{ producto.descripcion }}</p>
+                        <h5>Stock: {{ producto.stock }}</h5>
+                        <div class="navbar">
+                            <form method="post" action="/realizar_compra/" style="display: flex; gap: 10px;">
+                                {% csrf_token %}
+                                        <input class="getstarted scrollto" type="submit" value="Comprar">
+                                        <input type="number" class="form-control" style="width: 58px;" min="1" value="1" name="cantidad"">
+                                        <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                            </form>                         
+                        </div>
+                    </div>
+                    {% empty %}
+                        <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
+                            <p style="margin-top: 4px; margin-bottom: 8px;">No hay productos</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- lista busqueda -->
+                {% if '/busqueda' in request.path %}
+                    {% for busqueda in lista %}
+                    <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
+                        <span style="margin-left: auto; font-size: medium;">{{ busqueda.id }}<sup>id</sup></span>
+                        <span style="margin: 0 auto;">{{ busqueda.nombre }}</span>
+                        <p style="margin-top: 4px; margin-bottom: 8px;">{{ busqueda.descripcion }}</p>
+                        <h5>Stock: {{ busqueda.stock }}</h5>     
+                        <div class="navbar">
+                            <form method="post" action="/realizar_compra/" style="display: flex; gap: 10px;">
+                                {% csrf_token %}
+                                        <input class="getstarted scrollto" type="submit" value="Comprar">
+                                        <input type="number" class="form-control" style="width: 58px;" min="1" value="1" name="cantidad"">
+                                        <input type="hidden" name="producto_id" value="{{ busqueda.id }}">
+                            </form>                         
+                        </div>                    
+                    </div>
+                    {% empty %}
                     <div class="col-lg-3 col-md-5 content-item" style="display: flex; flex-direction: column; align-items: center;">
                         <p style="margin-top: 4px; margin-bottom: 8px;">No hay productos</p>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
         </div>
     </div>
 </section

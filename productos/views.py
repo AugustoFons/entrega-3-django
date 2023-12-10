@@ -15,3 +15,4 @@ def crear_producto(request):
         return redirect('/')
 
     return render(request, 'crear_producto.html')
+
