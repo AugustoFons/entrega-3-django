@@ -7,7 +7,6 @@ from django.http import JsonResponse
 
 #obtener productos
 def home(request):
-
     productos = Producto.objects.all()
 
     return render(request, 'index.html', {'productos': productos})
